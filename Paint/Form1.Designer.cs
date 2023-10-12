@@ -39,8 +39,8 @@
             btnRed = new ToolStripButton();
             btnYellow = new ToolStripButton();
             btnGreen = new ToolStripButton();
-            Board_PictureBox = new PictureBox();
             btnClear = new ToolStripButton();
+            Board_PictureBox = new PictureBox();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Board_PictureBox).BeginInit();
             SuspendLayout();
@@ -57,7 +57,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { Shapes, btn_Black, btnRed, btnYellow, btnGreen, btnClear });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(800, 27);
+            toolStrip1.Size = new Size(700, 27);
             toolStrip1.TabIndex = 2;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -65,27 +65,29 @@
             // 
             Shapes.DropDownItems.AddRange(new ToolStripItem[] { btnLine, btnRectangle, btnCircle });
             Shapes.Name = "Shapes";
-            Shapes.Size = new Size(70, 27);
+            Shapes.Size = new Size(56, 27);
             Shapes.Text = "Shapes";
             // 
             // btnLine
             // 
             btnLine.Name = "btnLine";
-            btnLine.Size = new Size(158, 26);
+            btnLine.Size = new Size(180, 22);
             btnLine.Text = "Line";
             btnLine.Click += Click_btnShapes;
             // 
             // btnRectangle
             // 
             btnRectangle.Name = "btnRectangle";
-            btnRectangle.Size = new Size(158, 26);
+            btnRectangle.Size = new Size(180, 22);
             btnRectangle.Text = "Rectangle";
+            btnRectangle.Click += Click_btnShapes;
             // 
             // btnCircle
             // 
             btnCircle.Name = "btnCircle";
-            btnCircle.Size = new Size(158, 26);
+            btnCircle.Size = new Size(180, 22);
             btnCircle.Text = "Circle";
+            btnCircle.Click += Click_btnShapes;
             // 
             // btn_Black
             // 
@@ -134,33 +136,36 @@
             btnGreen.Text = "Green";
             btnGreen.Click += ColorButton_Click;
             // 
+            // btnClear
+            // 
+            btnClear.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            btnClear.ImageTransparentColor = Color.Magenta;
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(38, 24);
+            btnClear.Text = "Clear";
+            btnClear.Click += btnClear_Click;
+            // 
             // Board_PictureBox
             // 
             Board_PictureBox.Dock = DockStyle.Fill;
             Board_PictureBox.Location = new Point(0, 27);
+            Board_PictureBox.Margin = new Padding(3, 2, 3, 2);
             Board_PictureBox.Name = "Board_PictureBox";
-            Board_PictureBox.Size = new Size(800, 423);
+            Board_PictureBox.Size = new Size(700, 311);
             Board_PictureBox.TabIndex = 3;
             Board_PictureBox.TabStop = false;
             Board_PictureBox.MouseDown += Board_PictureBox_MouseDown;
             Board_PictureBox.MouseMove += Board_PictureBox_MouseMove;
             Board_PictureBox.MouseUp += Board_PictureBox_MouseUp;
             // 
-            // btnClear
-            // 
-            btnClear.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            btnClear.ImageTransparentColor = Color.Magenta;
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(47, 24);
-            btnClear.Text = "Clear";
-            // 
             // Paint
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(700, 338);
             Controls.Add(Board_PictureBox);
             Controls.Add(toolStrip1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Paint";
             Text = "Paint";
             toolStrip1.ResumeLayout(false);

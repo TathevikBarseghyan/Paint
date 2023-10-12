@@ -16,9 +16,9 @@ namespace Paint
         bool IsDrawing = false;
         int penSize = 5;
         private SelectedShape currentShape;
-        Point startPoint = new Point(0, 0);
-
-
+        Point startPoint;
+        Point endPoint;
+        bool isErased = false;
 
         public Paint()
         {
@@ -33,15 +33,14 @@ namespace Paint
 
         private void Board_PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            startPoint = e.Location;
-            Board_PictureBox_MouseMove(sender, e);
+            endPoint = e.Location;
             Invalidate();
             IsDrawing = false;
         }
 
         private void Board_PictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (IsDrawing == true)
+            if (IsDrawing)
             {
                 Graphics graphics = Graphics.FromImage(Bitmap);
 
@@ -55,14 +54,14 @@ namespace Paint
                         startPoint = new Point(e.X, e.Y);
                         break;
                     case SelectedShape.Rectangle:
-                        int x = (startPoint.X > e.X) ? startPoint.X : e.X;
-                        int y = (startPoint.Y > e.Y) ? startPoint.Y : e.Y;
-                        int width = Math.Abs(startPoint.X - e.X);
-                        int height = Math.Abs(startPoint.Y - e.Y);
+                        int x = (startPoint.X > endPoint.X) ? startPoint.X : endPoint.X;
+                        int y = (startPoint.Y > endPoint.Y) ? startPoint.Y : endPoint.Y;
+                        int width = Math.Abs(startPoint.X - endPoint.X);
+                        int height = Math.Abs(startPoint.Y - endPoint.Y);
                         graphics.DrawRectangle(Pen, x, y, width, height);
                         break;
                     case SelectedShape.Circle:
-                        int radius = (int)Math.Sqrt(Math.Pow(e.X - startPoint.X, 2) + Math.Pow(e.Y - startPoint.Y, 2));
+                        int radius = (int)Math.Sqrt(Math.Pow(endPoint.X - startPoint.X, 2) + Math.Pow(endPoint.Y - startPoint.Y, 2));
                         int centerX = startPoint.X - radius;
                         int centerY = startPoint.Y - radius;
 
@@ -72,9 +71,11 @@ namespace Paint
                         }
                         break;
                 }
+                Invalidate();
                 Board_PictureBox.Image = Bitmap;
 
             }
+
         }
         private void ColorButton_Click(object sender, EventArgs e)
         {
@@ -107,7 +108,7 @@ namespace Paint
                 case "btnLine":
                     currentShape = SelectedShape.Line;
                     break;
-                case "btnRectange":
+                case "btnRectangle":
                     currentShape = SelectedShape.Rectangle;
                     break;
                 case "btnCircle":
@@ -117,5 +118,11 @@ namespace Paint
             }
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Graphics graphics = Graphics.FromImage(Bitmap);
+            graphics.Clear(Color.White);
+            Refresh();
+        }
     }
 }
