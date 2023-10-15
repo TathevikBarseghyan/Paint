@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Net;
 
 namespace Paint
@@ -18,11 +19,19 @@ namespace Paint
         private SelectedShape currentShape;
         Point startPoint;
         Point endPoint;
-        bool isErased = false;
+        Image OpenFile;
 
         public Paint()
         {
             InitializeComponent();
+
+            for (int i = 0; i < Bitmap.Width; i++)
+            {
+                for (int j = 0; j < Bitmap.Height; j++)
+                {
+                    Bitmap.SetPixel(i, j, Color.White);
+                }
+            }
         }
 
         private void Board_PictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -123,6 +132,39 @@ namespace Paint
             Graphics graphics = Graphics.FromImage(Bitmap);
             graphics.Clear(Color.White);
             Refresh();
+        }
+
+        private void SaveAsToolStrip_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.Filter = "Jpeg Image|*.jpg|Bitmap Image *.bmp|";
+            saveFileDialog.Title = "SAve an Image File";
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                FileStream fileStream = (FileStream)saveFileDialog.OpenFile();
+                switch (saveFileDialog.FilterIndex)
+                {
+                    case 1:
+                        this.Board_PictureBox.Image.Save(fileStream, ImageFormat.Jpeg);
+                        break;
+                    case 2:
+                        this.Board_PictureBox.Image.Save(fileStream, ImageFormat.Bmp);
+
+                        break;
+                }
+                fileStream.Close();
+            }
+        }
+
+        private void OpenToolStrip_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            DialogResult dialogResult = openFileDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                OpenFile = Image.FromFile(openFileDialog.FileName);
+                Board_PictureBox.Image = OpenFile;
+            }
         }
     }
 }

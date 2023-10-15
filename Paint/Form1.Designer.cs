@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            toolStrip1 = new ToolStrip();
+            Board_PictureBox = new PictureBox();
             Shapes = new ToolStripMenuItem();
             btnLine = new ToolStripMenuItem();
             btnRectangle = new ToolStripMenuItem();
@@ -40,52 +38,54 @@
             btnYellow = new ToolStripButton();
             btnGreen = new ToolStripButton();
             btnClear = new ToolStripButton();
-            Board_PictureBox = new PictureBox();
-            toolStrip1.SuspendLayout();
+            toolStrip = new ToolStrip();
+            File = new ToolStripMenuItem();
+            NewToolStrip = new ToolStripMenuItem();
+            OpenToolStrip = new ToolStripMenuItem();
+            SaveAsToolStrip = new ToolStripMenuItem();
+            saveFileDialog = new SaveFileDialog();
+            openFileDialog = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)Board_PictureBox).BeginInit();
+            toolStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // contextMenuStrip1
+            // Board_PictureBox
             // 
-            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(61, 4);
-            // 
-            // toolStrip1
-            // 
-            toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { Shapes, btn_Black, btnRed, btnYellow, btnGreen, btnClear });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(700, 27);
-            toolStrip1.TabIndex = 2;
-            toolStrip1.Text = "toolStrip1";
+            Board_PictureBox.Dock = DockStyle.Fill;
+            Board_PictureBox.Location = new Point(0, 27);
+            Board_PictureBox.Name = "Board_PictureBox";
+            Board_PictureBox.Size = new Size(800, 424);
+            Board_PictureBox.TabIndex = 3;
+            Board_PictureBox.TabStop = false;
+            Board_PictureBox.MouseDown += Board_PictureBox_MouseDown;
+            Board_PictureBox.MouseMove += Board_PictureBox_MouseMove;
+            Board_PictureBox.MouseUp += Board_PictureBox_MouseUp;
             // 
             // Shapes
             // 
             Shapes.DropDownItems.AddRange(new ToolStripItem[] { btnLine, btnRectangle, btnCircle });
             Shapes.Name = "Shapes";
-            Shapes.Size = new Size(56, 27);
+            Shapes.Size = new Size(70, 27);
             Shapes.Text = "Shapes";
             // 
             // btnLine
             // 
             btnLine.Name = "btnLine";
-            btnLine.Size = new Size(180, 22);
+            btnLine.Size = new Size(158, 26);
             btnLine.Text = "Line";
             btnLine.Click += Click_btnShapes;
             // 
             // btnRectangle
             // 
             btnRectangle.Name = "btnRectangle";
-            btnRectangle.Size = new Size(180, 22);
+            btnRectangle.Size = new Size(158, 26);
             btnRectangle.Text = "Rectangle";
             btnRectangle.Click += Click_btnShapes;
             // 
             // btnCircle
             // 
             btnCircle.Name = "btnCircle";
-            btnCircle.Size = new Size(180, 22);
+            btnCircle.Size = new Size(158, 26);
             btnCircle.Text = "Circle";
             btnCircle.Click += Click_btnShapes;
             // 
@@ -141,53 +141,88 @@
             btnClear.DisplayStyle = ToolStripItemDisplayStyle.Text;
             btnClear.ImageTransparentColor = Color.Magenta;
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(38, 24);
+            btnClear.Size = new Size(47, 24);
             btnClear.Text = "Clear";
             btnClear.Click += btnClear_Click;
             // 
-            // Board_PictureBox
+            // toolStrip
             // 
-            Board_PictureBox.Dock = DockStyle.Fill;
-            Board_PictureBox.Location = new Point(0, 27);
-            Board_PictureBox.Margin = new Padding(3, 2, 3, 2);
-            Board_PictureBox.Name = "Board_PictureBox";
-            Board_PictureBox.Size = new Size(700, 311);
-            Board_PictureBox.TabIndex = 3;
-            Board_PictureBox.TabStop = false;
-            Board_PictureBox.MouseDown += Board_PictureBox_MouseDown;
-            Board_PictureBox.MouseMove += Board_PictureBox_MouseMove;
-            Board_PictureBox.MouseUp += Board_PictureBox_MouseUp;
+            toolStrip.ImageScalingSize = new Size(20, 20);
+            toolStrip.Items.AddRange(new ToolStripItem[] { File, Shapes, btn_Black, btnRed, btnYellow, btnGreen, btnClear });
+            toolStrip.Location = new Point(0, 0);
+            toolStrip.Name = "toolStrip";
+            toolStrip.Size = new Size(800, 27);
+            toolStrip.TabIndex = 2;
+            toolStrip.Text = "toolStrip1";
+            // 
+            // File
+            // 
+            File.DropDownItems.AddRange(new ToolStripItem[] { NewToolStrip, OpenToolStrip, SaveAsToolStrip });
+            File.Name = "File";
+            File.Size = new Size(46, 27);
+            File.Text = "File";
+            // 
+            // NewToolStrip
+            // 
+            NewToolStrip.Name = "NewToolStrip";
+            NewToolStrip.ShortcutKeys = Keys.Control | Keys.N;
+            NewToolStrip.Size = new Size(224, 26);
+            NewToolStrip.Text = "New";
+            NewToolStrip.Click += btnClear_Click;
+            // 
+            // OpenToolStrip
+            // 
+            OpenToolStrip.Name = "OpenToolStrip";
+            OpenToolStrip.ShortcutKeys = Keys.Control | Keys.O;
+            OpenToolStrip.Size = new Size(224, 26);
+            OpenToolStrip.Text = "Open";
+            OpenToolStrip.Click += OpenToolStrip_Click;
+            // 
+            // SaveAsToolStrip
+            // 
+            SaveAsToolStrip.Name = "SaveAsToolStrip";
+            SaveAsToolStrip.ShortcutKeys = Keys.Control | Keys.S;
+            SaveAsToolStrip.Size = new Size(224, 26);
+            SaveAsToolStrip.Text = "Save As";
+            SaveAsToolStrip.Click += SaveAsToolStrip_Click;
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
             // 
             // Paint
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(800, 451);
             Controls.Add(Board_PictureBox);
-            Controls.Add(toolStrip1);
-            Margin = new Padding(3, 2, 3, 2);
+            Controls.Add(toolStrip);
             Name = "Paint";
             Text = "Paint";
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Board_PictureBox).EndInit();
+            toolStrip.ResumeLayout(false);
+            toolStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private ContextMenuStrip contextMenuStrip1;
-        private ToolStrip toolStrip1;
-        private ToolStripButton btnYellow;
-        private ToolStripButton btnGreen;
-        private ToolStripButton btn_Black;
-        private ToolStripButton btnRed;
         private PictureBox Board_PictureBox;
         private ToolStripMenuItem Shapes;
         private ToolStripMenuItem btnLine;
         private ToolStripMenuItem btnRectangle;
         private ToolStripMenuItem btnCircle;
+        private ToolStripButton btn_Black;
+        private ToolStripButton btnRed;
+        private ToolStripButton btnYellow;
+        private ToolStripButton btnGreen;
         private ToolStripButton btnClear;
+        private ToolStrip toolStrip;
+        private SaveFileDialog saveFileDialog;
+        private OpenFileDialog openFileDialog;
+        private ToolStripMenuItem File;
+        private ToolStripMenuItem NewToolStrip;
+        private ToolStripMenuItem OpenToolStrip;
+        private ToolStripMenuItem SaveAsToolStrip;
     }
 }
